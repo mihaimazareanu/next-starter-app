@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Hello Next</h1>
+      <h1>I am live on Vercel</h1>
     </div>
   );
 }

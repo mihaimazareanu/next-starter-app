@@ -13,12 +13,6 @@ export default function Home() {
       </Head>
 
       <h1>Hello Next</h1>
-      <div>
-        <a href="/products">To the products</a>
-      </div>
-      <div>
-        <Link href="/products">To the products per Link</Link>
-      </div>
     </div>
   );
 }

@@ -2,15 +2,17 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-const products = ["Handy", "Auto", "Wohnwagen"];
-
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState(null);
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch("/api/products");
+        const url = filter
+          ? `/api/products?category=${filter}`
+          : "api/products";
+        const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
           setProducts(data);
@@ -23,7 +25,15 @@ const Products = () => {
       }
     };
     getProducts();
-  }, []);
+  }, [filter]);
+
+  const uniqueCategories = [
+    ...new Set(products.map((product) => product.category)),
+  ];
+
+  console.log(filter);
+  console.log(products);
+
   return (
     <>
       <Head>
@@ -32,6 +42,29 @@ const Products = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>Products Dashboard</div>
+      <div>
+        <label htmlFor="categories">Select a filter:</label>
+        <select
+          name="categories"
+          id="categories"
+          onChange={(event) => {
+            if (event.target.value === "") {
+              setFilter(null);
+            } else {
+              setFilter(event.target.value);
+            }
+          }}
+        >
+          <option value="">Show all</option>
+          {uniqueCategories.map((category) => {
+            return (
+              <>
+                <option value={category}>{category}</option>
+              </>
+            );
+          })}
+        </select>
+      </div>
       <ul>
         {products.map((product) => {
           return (

@@ -23,8 +23,10 @@ const ProductDetails = () => {
         alert(error.message);
       }
     };
-    getProduct();
-  }, []);
+    if (productId) {
+      getProduct();
+    }
+  }, [productId]);
   console.log(product);
   // console.log(products);
   return (
